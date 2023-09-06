@@ -43,6 +43,7 @@ public:
 
 private Q_SLOTS:
   void toggle();
+  void pub();
 
 private:
   double last_dt_{0};
@@ -51,6 +52,7 @@ private:
   rclcpp::TimerBase::SharedPtr timer_;
 
   QPushButton * toggle_button_{nullptr};
+  QPushButton * pub_button_{nullptr};
   QLabel * pose_label_{nullptr};
   QLabel * time_label_{nullptr};
 

@@ -31,6 +31,11 @@ InitialPosePanel::InitialPosePanel(QWidget * parent) : Panel(parent)
   toggle_button_->setFixedSize(QSize(60, 30));
   QObject::connect(toggle_button_, SIGNAL(clicked()), this, SLOT(toggle()));
 
+  pub_button_ = new QPushButton();
+  pub_button_->setText("PUB");
+  pub_button_->setFixedSize(QSize(60, 30));
+  QObject::connect(pub_button_, SIGNAL(clicked()), this, SLOT(pub()));
+
   // Label
   pose_label_ = new QLabel();
   time_label_ = new QLabel();
@@ -43,6 +48,7 @@ InitialPosePanel::InitialPosePanel(QWidget * parent) : Panel(parent)
 
   // Add widges
   main_layout->addWidget(toggle_button_);
+  main_layout->addWidget(pub_button_);
   main_layout->addWidget(pose_label_);
   main_layout->addWidget(time_label_);
 
@@ -153,6 +159,13 @@ void InitialPosePanel::toggle()
   last_initial_pose_ = std::nullopt;
   pose_label_->setText("");
   time_label_->setText("remaining time: ");
+}
+
+void InitialPosePanel::pub()
+{
+  if (last_initial_pose_.has_value()) {
+    pose_pub_->publish(last_initial_pose_.value());
+  }
 }
 
 }  // namespace initialpose_plugins
